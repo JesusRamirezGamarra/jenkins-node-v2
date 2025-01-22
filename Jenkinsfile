@@ -59,7 +59,7 @@ pipeline {
             steps {
                 sshagent(['droplet-ssh-key']) {
                     //sh 'ssh -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"'
-                    sh 'ssh -o root@165.22.186.185 "echo conexion correcta"'
+                    sh 'ssh root@165.22.186.185 "echo conexion correcta"'
                 }
             }
         }
