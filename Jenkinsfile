@@ -39,7 +39,7 @@ pipeline {
 
             environment {
                     DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-                    DOCKER_REPO = 'fercdevv/jenkins-node'
+                    DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
             }
             steps {
                 sh '''
