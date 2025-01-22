@@ -50,34 +50,45 @@ pipeline {
             }
         }
 
-        stage('Testear conexion SSH con servidor DigitalOcean con puerto 2222') {
-            when {
-                branch 'develop'
-            }
-            agent any
-            steps {
-                sshagent(['droplet-ssh-key']) {
-                    sh '''
-                    ssh -p 2222 -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"
-                    '''
-                }
-            }
-        }
-
-
         stage('Testear conexion SSH con servidor DigitalOcean') {
-            when {
-                branch 'develop'
-            }
-            agent any
             steps {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
-                    ssh -vvv -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"
+                    ssh -vvv -o StrictHostKeyChecking=no -i C:/Users/jesus/.ssh/id_rsa root@165.22.186.185 "echo conexion correcta"
                     '''
                 }
             }
         }
+
+
+        // stage('Testear conexion SSH con servidor DigitalOcean con puerto 2222') {
+        //     when {
+        //         branch 'develop'
+        //     }
+        //     agent any
+        //     steps {
+        //         sshagent(['droplet-ssh-key']) {
+        //             sh '''
+        //             ssh -p 2222 -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"
+        //             '''
+        //         }
+        //     }
+        // }
+
+
+        // stage('Testear conexion SSH con servidor DigitalOcean') {
+        //     when {
+        //         branch 'develop'
+        //     }
+        //     agent any
+        //     steps {
+        //         sshagent(['droplet-ssh-key']) {
+        //             sh '''
+        //             ssh -vvv -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Testear conexion SHH con servidor digital Ocean') {
             when {
