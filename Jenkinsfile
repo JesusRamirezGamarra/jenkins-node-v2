@@ -49,6 +49,20 @@ pipeline {
                 '''
             }
         }
+        
+        stage('Testear conexion SSH con servidor DigitalOcean') {
+            when {
+                branch 'develop'
+            }
+            agent any
+            steps {
+                sshagent(['droplet-ssh-key']) {
+                    sh '''
+                    ssh -vvv -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"
+                    '''
+                }
+            }
+        }
 
         stage('Testear conexion SHH con servidor digital Ocean') {
             when {
