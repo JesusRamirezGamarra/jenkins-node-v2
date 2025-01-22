@@ -49,7 +49,7 @@ pipeline {
                 '''
             }
         }
-        
+
         stage('Testear conexion SSH con servidor DigitalOcean') {
             when {
                 branch 'develop'
@@ -75,7 +75,7 @@ pipeline {
                     sh 'ssh -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"'
                     //sh 'ssh root@165.22.186.185 "echo conexion correcta"'
                 } 
-            }
+            } 
         }
     }
     
