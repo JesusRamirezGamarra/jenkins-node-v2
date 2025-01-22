@@ -50,7 +50,7 @@ pipeline {
             }
         }
     }
-
+   
     post {
         success {
             mail to: 'lcruzfarfan@gmail.com',
