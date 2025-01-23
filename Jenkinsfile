@@ -75,7 +75,7 @@ pipeline {
         //     }
         // }
 
-
+ 
         // stage('Testear conexion SSH con servidor DigitalOcean') {
         //     when {
         //         branch 'develop'
