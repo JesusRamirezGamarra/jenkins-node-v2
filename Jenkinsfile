@@ -37,7 +37,6 @@ pipeline {
             }
         }
 
-
         stage("sonarQube Analisis ...") {
             agent {
                 docker {
@@ -45,7 +44,13 @@ pipeline {
                 }
             }
             steps {
-                sh 'chmod +x ./node_modules/.bin/sonar-scanner'
+                sh '''
+                if [ ! -f ./node_modules/.bin/sonar-scanner ]; then
+                    echo "Sonar scanner no instalado, instalando dependencias..."
+                    npm install
+                fi
+                chmod +x ./node_modules/.bin/sonar-scanner
+                '''
                 script {
                     withSonarQubeEnv("sonarqube-server") {
                         sh './node_modules/.bin/sonar-scanner'
@@ -53,6 +58,21 @@ pipeline {
                 }
             }
         }
+        // stage("sonarQube Analisis ...") {
+        //     agent {
+        //         docker {
+        //             image 'node:18-alpine'
+        //         }
+        //     }
+        //     steps {
+        //         sh 'chmod +x ./node_modules/.bin/sonar-scanner'
+        //         script {
+        //             withSonarQubeEnv("sonarqube-server") {
+        //                 sh './node_modules/.bin/sonar-scanner'
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("sonarQube quality gate..."){
             agent any
