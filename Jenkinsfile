@@ -26,6 +26,30 @@ pipeline {
             }
         }
 
+        stage("sonarQube Analisis ..."){
+            agent any
+            steps{
+                script{
+                    withSonarQubeEnv(SONARQUBE) {
+                        sh './node_modules/.bin/sonar-scanner'
+                }
+            }
+        }
+
+        stage("sonarQube quality gate..."){
+            agent any
+            steps{
+                script{
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Construir y pushear imagen a dockerhub') {
             when {
                 branch 'develop'

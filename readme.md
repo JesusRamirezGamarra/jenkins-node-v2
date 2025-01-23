@@ -63,3 +63,6 @@ mayIe3FrSS2cPNsa+SrzaBwtvu1f4Fk7pa/J5bV3JYV09XtSsJX5uH26ih2bPWn4PlpvqO
 HCO1hTycjFQcpXj9pR9QRTC+FWfQv8NTL1L8foz7IF57LMYtMp4e1j9lU3aOo+/w2Yl9hO
 MHB6ZXtIzf0AAAARcm9vdEA0YTBjYzNhNGFiYTEBAg==
 -----END OPENSSH PRIVATE KEY-----
+
+
+ npm i --save-dev sonar-scanner
