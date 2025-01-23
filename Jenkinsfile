@@ -73,7 +73,7 @@ pipeline {
         //         }
         //     }
         // }
-
+   
         stage("sonarQube quality gate..."){
             agent any
             steps{
