@@ -37,6 +37,22 @@ pipeline {
             }
         }
 
+        stage("sonarQube analis .........."){
+            agent any
+            steps{
+                script{
+                    sonarScanner{
+                        installationName: 'sonarQube-server',
+                        additionalArguments: "-Dsonar.login=${SONARQUBE_TOKEN}"
+                    
+                    // def scannerHome = tool 'sonarQube';
+                    // withSonarQubeEnv('sonarQube') {
+                    //     sh "${scannerHome}/bin/sonar-scanner"
+                    // }
+                }
+            }
+        }
+
         stage("sonarQube Analisis ...") {
             agent {
                 docker {
