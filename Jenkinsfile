@@ -27,7 +27,7 @@ pipeline {
         }
 
         stage("Listar carpetas y archivos del REPo") {
-            agemt {
+            agent {
                 docker {
                     image 'node:18-alpine'
                 }
