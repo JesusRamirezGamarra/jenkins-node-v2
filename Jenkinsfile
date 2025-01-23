@@ -91,7 +91,7 @@ pipeline {
             environment {
                     DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
             }
-
+ 
             steps {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
