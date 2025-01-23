@@ -52,7 +52,7 @@ pipeline {
                 chmod +x ./node_modules/.bin/sonar-scanner
                 '''
                 script {
-                    withSonarQubeEnv("sonarqube-server") {
+                    withSonarQubeEnv("sonarQube") {
                         sh './node_modules/.bin/sonar-scanner'
                     }
                 }
@@ -73,7 +73,7 @@ pipeline {
         //         }
         //     }
         // }
-   
+     
         stage("sonarQube quality gate..."){
             agent any
             steps{
