@@ -104,7 +104,7 @@ pipeline {
             } 
         }
     }
-
+   
     post {
         success {
             mail to: 'luciojesusramirezgamarra@gmail.com',
