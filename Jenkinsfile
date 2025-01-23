@@ -26,6 +26,18 @@ pipeline {
             }
         }
 
+        stage("Listar carpetas y archivos del REPo") {
+            agemt {
+                docker {
+                    image 'node:18-alpine'
+                }
+            }
+            steps {
+                sh 'ls -la'
+            }
+        }
+
+
         stage("sonarQube Analisis ..."){
             agent any
             steps{
