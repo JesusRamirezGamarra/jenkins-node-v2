@@ -38,18 +38,19 @@ pipeline {
         }
 
 
-        stage("sonarQube Analisis ..."){
+        stage("sonarQube Analisis ...") {
             agent {
                 docker {
                     image 'node:18-alpine'
                 }
             }
-            steps{
-                script{
+            steps {
+                sh 'chmod +x ./node_modules/.bin/sonar-scanner'
+                script {
                     withSonarQubeEnv("sonarqube-server") {
                         sh './node_modules/.bin/sonar-scanner'
+                    }
                 }
-            }
             }
         }
 
