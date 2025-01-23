@@ -50,15 +50,15 @@ pipeline {
             }
         }
 
-        stage('Testear conexion SSH con servidor DigitalOcean') {
-            steps {
-                sshagent(['droplet-ssh-key']) {
-                    sh '''
-                    ssh -vvv -o StrictHostKeyChecking=no -i C:/Users/jesus/.ssh/id_rsa root@104.248.48.92 "echo conexion correcta"
-                    '''
-                }
-            }
-        }
+        // stage('Testear conexion SSH con servidor DigitalOcean') {
+        //     steps {
+        //         sshagent(['droplet-ssh-key']) {
+        //             sh '''
+        //             ssh -vvv -o StrictHostKeyChecking=no -i C:/Users/jesus/.ssh/id_rsa root@104.248.48.92 "echo conexion correcta"
+        //             '''
+        //         }
+        //     }
+        // }
 
 
         // stage('Testear conexion SSH con servidor DigitalOcean con puerto 2222') {
