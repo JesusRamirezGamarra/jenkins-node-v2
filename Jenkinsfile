@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
-                    ssh -vvv -o StrictHostKeyChecking=no -i C:/Users/jesus/.ssh/id_rsa root@165.22.186.185 "echo conexion correcta"
+                    ssh -vvv -o StrictHostKeyChecking=no -i C:/Users/jesus/.ssh/id_rsa root@104.248.48.92 "echo conexion correcta"
                     '''
                 }
             }
@@ -89,7 +89,7 @@ pipeline {
         //         }
         //     }
         // }
-
+  
         stage('Testear conexion SHH con servidor digital Ocean') {
             when {
                 branch 'develop'
@@ -98,7 +98,7 @@ pipeline {
 
             steps {
                 sshagent(['droplet-ssh-key']) {
-                    sh 'ssh -o StrictHostKeyChecking=no root@165.22.186.185 "echo conexion correcta"'
+                    sh 'ssh -o StrictHostKeyChecking=no root@104.248.48.92 "echo conexion correcta"'
                     //sh 'ssh root@165.22.186.185 "echo conexion correcta"'
                 } 
             } 
