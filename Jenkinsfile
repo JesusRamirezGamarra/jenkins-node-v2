@@ -39,7 +39,11 @@ pipeline {
 
 
         stage("sonarQube Analisis ..."){
-            agent any
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                }
+            }
             steps{
                 script{
                     withSonarQubeEnv("sonarqube-server") {
