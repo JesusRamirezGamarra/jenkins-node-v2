@@ -204,7 +204,7 @@ pipeline {
                         docker ps -q --filter name=node_project_LJRG | xargs -r docker stop &&
                         docker ps -a -q --filter name=node_project_LJRG | xargs -r docker rm &&
                         docker pull $DOCKER_REPO:latest &&
-                        docker run -d --name node_project_LJRG -p 8080:3000 $DOCKER_REPO:latest
+                        docker run -d --name node_project_LJRG -p 8081:3000 $DOCKER_REPO:latest
                         "
                     '''
                 }
