@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONARQUBE_TOKEN = credentials('sonar-token')
-        CONTAINER_NAME_PROJECT = 'node_project'
+        CONTAINER_NAME_PROJECT = 'node_project_LJRG'
     }
 
     stages {
@@ -152,6 +152,20 @@ pipeline {
             }
         }
 
+        stage('Remover container en ejecucion antes de su actualizacion...') {
+            when {
+                branch 'develop'
+            }
+            agent any
+            steps {
+                sh """
+                    docker rm -f ${CONTAINER_NAME_PROJECT} || true
+                """
+            }
+
+        }
+
+
         stage('Desplegar proyecto node a Digital ocean') {
             when {
                 branch 'develop'
@@ -159,7 +173,7 @@ pipeline {
             agent any
 
             environment {
-                    DOCKER_REPO = 'fercdevv/jenkins-node'
+                    DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
             }
 
             steps {
@@ -167,7 +181,7 @@ pipeline {
                     sh '''
                         ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
                         docker pull $DOCKER_REPO:latest &&
-                        docker run -d --name node_project -p 8080:3000 $DOCKER_REPO:latest
+                        docker run -d --name node_project_LJRG -p 8080:3000 $DOCKER_REPO:latest
                         "
                     '''
                 }
@@ -178,7 +192,7 @@ pipeline {
 
     post {
         success {
-            mail to: 'lcruzfarfan@gmail.com',
+            mail to: 'luciojesusramirezgamarra@gmail.com',
                 subject: "Pipeline ${env.JOB_NAME} ejecucion correcta",
                 body: """
                 Hola,
