@@ -110,7 +110,7 @@ pipeline {
             }
 
         }
-
+ 
         stage('Construir y pushear imagen a dockerhub') {
             when {
                 branch 'develop'
