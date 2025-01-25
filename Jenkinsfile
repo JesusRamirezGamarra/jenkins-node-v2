@@ -166,6 +166,27 @@ pipeline {
         }
 
 
+        // stage('Desplegar proyecto node a Digital ocean') {
+        //     when {
+        //         branch 'develop'
+        //     }
+        //     agent any
+
+        //     environment {
+        //             DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
+        //     }
+
+        //     steps {
+        //         sshagent(['droplet-ssh-key']) {
+        //             sh '''
+        //                 ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
+        //                 docker pull $DOCKER_REPO:latest &&
+        //                 docker run -d --name node_project_LJRG -p 8080:3000 $DOCKER_REPO:latest
+        //                 "
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Desplegar proyecto node a Digital ocean') {
             when {
                 branch 'develop'
@@ -173,13 +194,15 @@ pipeline {
             agent any
 
             environment {
-                    DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
+                DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
             }
 
             steps {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
+                        docker ps -q --filter name=node_project_LJRG | xargs -r docker stop &&
+                        docker ps -a -q --filter name=node_project_LJRG | xargs -r docker rm &&
                         docker pull $DOCKER_REPO:latest &&
                         docker run -d --name node_project_LJRG -p 8080:3000 $DOCKER_REPO:latest
                         "
