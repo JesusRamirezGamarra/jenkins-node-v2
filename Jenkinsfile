@@ -1,6 +1,11 @@
 pipeline {
     agent none
 
+    environment {
+        SONARQUBE_TOKEN = credentials('sonar-token')
+        CONTAINER_NAME_PROJECT = 'node_project'
+    }
+
     stages {
         stage('Instalar dependencias...') {
             agent {
@@ -134,7 +139,6 @@ pipeline {
                 '''
             }
         }
-
         stage('Testear conexion SHH con servidor digital Ocean') {
             when {
                 branch 'develop'
@@ -155,22 +159,22 @@ pipeline {
             agent any
 
             environment {
-                    DOCKER_REPO = 'jesusramirezgamarra/jenkins-node'
+                    DOCKER_REPO = 'fercdevv/jenkins-node'
             }
- 
+
             steps {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
                         docker pull $DOCKER_REPO:latest &&
-                        docker rm -f node_project_LJRG || true &&
-                        docker run -d --name node_project_LJRG -p 8081:3000 $DOCKER_REPO:latest
+                        docker run -d --name node_project -p 8080:3000 $DOCKER_REPO:latest
                         "
                     '''
                 }
             }
         }
     }
+
 
     post {
         success {
