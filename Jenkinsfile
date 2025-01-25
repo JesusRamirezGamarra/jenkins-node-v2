@@ -115,7 +115,7 @@ pipeline {
             }
 
         }
- 
+
         stage('Construir y pushear imagen a dockerhub') {
             when {
                 branch 'develop'
@@ -158,12 +158,17 @@ pipeline {
             }
             agent any
             steps {
-                sh """
-                    docker rm -f ${CONTAINER_NAME_PROJECT} || true
-                """
+                sshagent(['droplet-ssh-key']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
+                        docker rm -f $CONTAINER_NAME_PROJECT || true
+                        "
+                    '''
+                }
             }
 
         }
+
 
 
         // stage('Desplegar proyecto node a Digital ocean') {
@@ -201,11 +206,8 @@ pipeline {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
-                        docker ps -q --filter name=node_project_LJRG | xargs -r docker stop &&
-                        docker ps -a -q --filter name=node_project_LJRG | xargs -r docker rm &&
                         docker pull $DOCKER_REPO:latest &&
-                        docker run -d --name node_project_LJRG -p 8081:3000 $DOCKER_REPO:latest
-                        "
+                        docker run -d --name node_project -p 8081:3000 $DOCKER_REPO:latest
                     '''
                 }
             }
