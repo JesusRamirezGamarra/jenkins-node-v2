@@ -37,43 +37,56 @@ pipeline {
             }
         }
 
-        stage("sonarQube analis .........."){
+        stage("sonarQube Analisis ..."){
             agent any
             steps{
                 script{
-                    sonarScanner{
-                        installationName: 'sonarQube-server',
-                        additionalArguments: "-Dsonar.login=${SONARQUBE_TOKEN}"
-                    
-                    // def scannerHome = tool 'sonarQube';
-                    // withSonarQubeEnv('sonarQube') {
-                    //     sh "${scannerHome}/bin/sonar-scanner"
-                    // }
-                }
-            }
-        }
-
-        stage("sonarQube Analisis ...") {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                }
-            }
-            steps {
-                sh '''
-                if [ ! -f ./node_modules/.bin/sonar-scanner ]; then
-                    echo "Sonar scanner no instalado, instalando dependencias..."
-                    npm install
-                fi
-                chmod +x ./node_modules/.bin/sonar-scanner
-                '''
-                script {
-                    withSonarQubeEnv("sonarQube") {
-                        sh './node_modules/.bin/sonar-scanner'
+                    def scannerHome = tool 'SonarScanner';
+                    withSonarQubeEnv(){
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
+
         }
+
+        // stage("sonarQube analis .........."){
+        //     agent any
+        //     steps{
+        //         script{
+        //             sonarScanner{
+        //                 installationName: 'sonarQube-server',
+        //                 additionalArguments: "-Dsonar.login=${SONARQUBE_TOKEN}"
+                    
+        //             // def scannerHome = tool 'sonarQube';
+        //             // withSonarQubeEnv('sonarQube') {
+        //             //     sh "${scannerHome}/bin/sonar-scanner"
+        //             // }
+        //         }
+        //     }
+        // }
+
+        // stage("sonarQube Analisis ...") {
+        //     agent {
+        //         docker {
+        //             image 'node:18-alpine'
+        //         }
+        //     }
+        //     steps {
+        //         sh '''
+        //         if [ ! -f ./node_modules/.bin/sonar-scanner ]; then
+        //             echo "Sonar scanner no instalado, instalando dependencias..."
+        //             npm install
+        //         fi
+        //         chmod +x ./node_modules/.bin/sonar-scanner
+        //         '''
+        //         script {
+        //             withSonarQubeEnv("sonarQube") {
+        //                 sh './node_modules/.bin/sonar-scanner'
+        //             }
+        //         }
+        //     }
+        // }
         // stage("sonarQube Analisis ...") {
         //     agent {
         //         docker {
@@ -89,7 +102,7 @@ pipeline {
         //         }
         //     }
         // }
-     
+    //  https://2b6e-38-25-17-255.ngrok-free.app 
         stage("sonarQube quality gate..."){
             agent any
             steps{
@@ -130,7 +143,7 @@ pipeline {
 
             steps {
                 sshagent(['droplet-ssh-key']) {
-                    sh 'ssh -o StrictHostKeyChecking=no root@104.248.48.92 "echo conexion correcta"'
+                    sh 'ssh -o StrictHostKeyChecking=no root@142.93.115.84 "echo conexion correcta"'
                 }
             }
         }
@@ -148,8 +161,9 @@ pipeline {
             steps {
                 sshagent(['droplet-ssh-key']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no root@104.248.48.92 "
+                        ssh -o StrictHostKeyChecking=no root@142.93.115.84 "
                         docker pull $DOCKER_REPO:latest &&
+                        docker rm -f node_project_LJRG || true &&
                         docker run -d --name node_project_LJRG -p 8081:3000 $DOCKER_REPO:latest
                         "
                     '''
